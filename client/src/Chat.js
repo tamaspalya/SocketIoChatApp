@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ScrollToBottom from "react-scroll-to-bottom";
+import Dropzone from "react-dropzone";
 
 
 function Chat({ socket, username, room }) {
@@ -23,8 +24,19 @@ function Chat({ socket, username, room }) {
         }
     }
 
-    const attachFile = () => {
+    const onDrop = (file) => {
 
+        console.log(file);
+
+        let formData = new FormData;
+
+        const config = {
+            header: {'content-type' : 'multipart/form-data'}
+        }
+
+        formData.append("file", file[0]);
+
+        
     }
 
     useEffect(() => {
@@ -72,9 +84,19 @@ function Chat({ socket, username, room }) {
                         event.key === "Enter" && sendMessage();
                     }}
                 />
-                <button onClick={attachFile}>&#128206;</button>
-                <button onClick={sendMessage}>&#9658;</button>
+                <Dropzone onDrop={onDrop}>
+                    {({ getRootProps, getInputProps }) => (
+                        <section>
+                            <div {...getRootProps()}>
+                                <input {...getInputProps()} />
+                                <button>&#128206;</button>
+                            </div>
+                        </section>
+                    )}
+                </Dropzone>
                 
+                <button onClick={sendMessage}>&#9658;</button>
+
             </div>
         </div>
     )
