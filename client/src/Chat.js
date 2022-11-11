@@ -26,7 +26,7 @@ function Chat({ socket, username, room }) {
 
     const onDrop = (file) => {
 
-        //console.log(file);
+        console.log(file);
 
         let formData = new FormData;
 
